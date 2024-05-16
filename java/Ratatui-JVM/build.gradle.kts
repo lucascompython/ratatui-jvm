@@ -22,7 +22,7 @@ java {
     targetCompatibility = JavaVersion.VERSION_22
 }
 
-// tasks.name<JavaExec>("run") {
+// tasks.named<JavaExec>("run") {
 //     standardInput = System.`in`
 // }
 
