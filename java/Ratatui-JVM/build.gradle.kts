@@ -27,7 +27,7 @@ java {
 tasks.register<Exec>("jextract") {
     commandLine = listOf(
         "../../jextract/jextract",
-        "--include-dir", "../../rust/dist/target/release",
+        "--include-dir", "../../rust/target/release",
         "--output", "src/main/java",
         "--target-package", "org.ratatui.bindings",
         "--library", "ratatui_jvm",
@@ -41,12 +41,18 @@ tasks.withType<JavaCompile> {
 
 tasks.withType<JavaExec> {
     args = listOf("--library", "ratatui_jvm")
-    val os = System.getProperty("os.name").toLowerCase()
-    if (os.contains("mac")) {
-        environment("DYLD_LIBRARY_PATH", "../../rust/target/release")
-    } else if (os.contains("win")) {
-        environment("PATH", "../../rust/target/release")
-    } else {
-        environment("LD_LIBRARY_PATH", "../../rust/target/release")
+    val os = System.getProperty("os.name").lowercase()
+
+    val envVar = when {
+        os.contains("mac") -> "DYLD_LIBRARY_PATH"
+        os.contains("win") -> {
+            val path = System.getenv("PATH")
+            val newPath = "$path;../../rust/target/release"
+            System.setProperty("PATH", newPath)
+            ""
+        }
+        else -> "LD_LIBRARY_PATH"
     }
+
+    environment(envVar, "../../rust/target/release")
 }
