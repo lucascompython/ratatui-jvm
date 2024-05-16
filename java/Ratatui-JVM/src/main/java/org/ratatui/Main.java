@@ -19,22 +19,17 @@ public class Main {
             System.out.println(greeted.getString(0));
         }
 
-        try (Arena arena = Arena.ofConfined()) {
-            MemorySegment string = arena.allocateFrom("Hello Ratatui from Java! (press 'q' to quit)");
+        try (var terminal = new Terminal()) {
+            terminal.enableRawMode();
+            terminal.enterAlternateScreen();
 
-            new_terminal();
-            enable_raw_mode();
-            enter_alternate_screen();
-            while (true) {
-                terminal_draw(string);
-                if (handle_events()) {
-                    break;
-                }
+
+            while (!terminal.handleEvents()) {
+                terminal.draw("Hello Ratatui from java! (Press 'q' to exit)");
             }
-            leave_alternate_screen();
-            disable_raw_mode();
-            drop_terminal();
-        }
 
+            terminal.leaveAlternateScreen();
+            terminal.disableRawMode();
+        }
     }
 }
