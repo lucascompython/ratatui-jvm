@@ -24,6 +24,6 @@ void terminal_draw(const char *string);
 
 bool handle_events(void);
 
-bool drop_terminal(void);
+void drop_terminal(void);
 
 #endif /* BINDINGS_H */

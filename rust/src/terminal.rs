@@ -75,8 +75,7 @@ pub extern "C" fn handle_events() -> bool {
 }
 
 #[no_mangle]
-pub extern "C" fn drop_terminal() -> bool {
+pub extern "C" fn drop_terminal() {
     let mut global_terminal = TERMINAL.lock().unwrap();
     global_terminal.take();
-    true
 }

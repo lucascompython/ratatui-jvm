@@ -13,7 +13,7 @@ public class Main {
         System.out.println(add(1, 2));
 
         try (Arena arena = Arena.ofConfined()) {
-            MemorySegment string = arena.allocateFrom("Jhon Doe");
+            MemorySegment string = arena.allocateFrom("John Doe");
             MemorySegment greeted = greet(string);
 
             System.out.println(greeted.getString(0));
