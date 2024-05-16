@@ -17,4 +17,8 @@ cd ../jextract
 # Compile the Java Bindings
 cd ../java/Ratatui-JVM
 ./gradlew run
+# If it doesn't work, try running the following command
+./gradlew installDist
+# then
+./build/install/Ratatui-JVM/bin/Ratatui-JVM # with the proper environment variable
 ```
